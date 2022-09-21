@@ -1,2 +1,2 @@
-# RT2 Opaque Reflections Refractions
+# Raytracer_2022
  
