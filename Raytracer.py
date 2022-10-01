@@ -9,28 +9,35 @@ height = 1024
 
 # Materiales
 
-brick = Material(diffuse = (0.8, 0.3, 0.3), spec = 16)
-stone = Material(diffuse = (0.4, 0.4, 0.4), spec = 8)
+# Opacos
+green = Material(diffuse=(0, 1, 0), spec=8)
+moon = Material(texture=Texture("moon.bmp"))
 
-mirror = Material(diffuse = (0.9, 0.9, 0.9), spec = 64, matType = REFLECTIVE)
-blueMirror = Material(diffuse = (0.2, 0.2, 0.9), spec = 64, matType = REFLECTIVE)
-yellowMirror = Material(diffuse = (0.9, 0.9, 0.2), spec = 64, matType = REFLECTIVE)
+# Reflectivos
+gold = Material(diffuse=(0.7, 0.7, 0), spec=32, matType=REFLECTIVE)
+mirror = Material(diffuse=(0.9, 0.9, 0.9), spec=64, matType=REFLECTIVE)
+
+# Transparentes
+canica = Material(diffuse=(0.9, 0.2, 0.9), spec=32,
+                  ior=1.5, matType=TRANSPARENT)
+glass = Material(diffuse=(0.9, 0.9, 0.9), spec=64,
+                 ior=1.5, matType=TRANSPARENT)
 
 rtx = Raytracer(width, height)
 
-rtx.envMap = Texture("parkingLot.bmp")
+rtx.envMap = Texture("landscape2.bmp")
 
-rtx.lights.append( AmbientLight(intensity = 0.1 ))
-rtx.lights.append( DirectionalLight(direction = (-1,-1,-1), intensity = 0.8 ))
-#rtx.lights.append( PointLight(point = (0,0,0)))
+rtx.lights.append(AmbientLight(intensity=0.1))
+rtx.lights.append(DirectionalLight(direction=(-1, -1, -1), intensity=0.8))
 
-rtx.scene.append( Sphere(V3(0,0,-10), 1, mirror)  )
+rtx.scene.append(Sphere(V3(-3, 2, -10), 1, green))
+rtx.scene.append(Sphere(V3(-3, -2, -10), 1, moon))
 
-rtx.scene.append( Sphere(V3(3,0,-10), 1, brick)  )
-rtx.scene.append( Sphere(V3(0,3,-10), 1, stone)  )
+rtx.scene.append(Sphere(V3(0, 2, -10), 1, gold))
+rtx.scene.append(Sphere(V3(0, -2, -10), 1, mirror))
 
-rtx.scene.append( Sphere(V3(-3,0,-10),1, blueMirror)  )
-rtx.scene.append( Sphere(V3(0,-3,-10), 1, yellowMirror)  )
+rtx.scene.append(Sphere(V3(3, 2, -10), 1, canica))
+rtx.scene.append(Sphere(V3(3, -2, -10), 1, glass))
 
 
 rtx.glRender()
